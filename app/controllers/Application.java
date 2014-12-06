@@ -16,7 +16,8 @@ public class Application extends Controller {
 
 	public static Result index() {
 		List<Message> msgs = Message.find.all();
-		return ok(index.render("please ser from", msgs));
+        Form<Message> f = new Form(Message.class);
+		return ok(index.render("please set from", f, msgs));
 	}
 
     public static Result add() {
@@ -94,4 +95,18 @@ public class Application extends Controller {
             return ok(delete.render("ERROR:入力エラーが怒りました", f));
         }
     }
+
+    public static Result sakujo(Long id) {
+//        Long id_i = Long.parseLong(id);
+        Message obj = Message.find.byId(id);
+        if (obj != null) {
+            obj.delete();
+            return redirect("/");
+        } else {
+            List<Message> msgs = Message.find.all();
+            Form<Message> f = new Form(Message.class);
+            return ok(index.render("削除対象が見つかりませんでした", f, msgs));
+        }
+    }
+
 }

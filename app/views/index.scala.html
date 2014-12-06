@@ -1,20 +1,40 @@
-@(msg: String, msgs: List[Message])
+@(msg: String, form1 : Form[Message], msgs: List[Message])
 
 @main("Sample Page") {
 	<h1>Hello</h1>
 	<p>@msg</p>
+
+	@helper.form(action = routes.Application.create) {
+
+	@(helper.inputText (
+		field = form1("name")
+	))
+	@(helper.inputText (
+		field = form1("mail")
+	))
+	@(helper.inputText (
+		field = form1("message")
+	))
+	<input type="submit">
+	}
 
 	<table>
 	<tr>
 		<th>id</th>
 		<th>name</th>
 		<th>message</th>
+		<th>action</th>
 	</tr>
 	@for(msg <- msgs) {
 	<tr>
 		<td>@msg.id</td>
 		<td>@msg.name</td>
-		<td>@msg.message</td>				
+		<td>@msg.message</td>
+		<td>
+		@helper.form(action = routes.Application.sakujo(msg.id)) {
+			<input type="submit" value="delete">
+		}
+		</td>
 	</tr>
 	}
 	</table>

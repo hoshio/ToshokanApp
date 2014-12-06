@@ -4,6 +4,7 @@
 
 # Home page
 GET     /			controllers.Application.index()
+POST    /index/:id	controllers.Application.sakujo(id : Long)
 GET		/add		controllers.Application.add()
 POST	/create		controllers.Application.create()
 GET		/item		controllers.Application.setitem()
